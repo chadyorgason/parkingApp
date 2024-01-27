@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
-export default function App() {
+const App = () => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: 40.2506, // BYU campus latitude
+          longitude: -111.6490, // BYU campus longitude
+          latitudeDelta: 0.03,
+          longitudeDelta: 0.03,
+        }}
+      >
+        <Marker
+          coordinate={{ latitude: 40.2506, longitude: -111.6490 }}
+          title="BYU Campus"
+          description="Brigham Young University"
+        />
+      </MapView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  map: {
+    flex: 1,
   },
 });
+
+export default App;
