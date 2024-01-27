@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
+import AccountPage from "./AccountPage";
+import LotStatus from "./LotStatus";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import CheckInForm from './checkInForm';
+
+const Tab = createBottomTabNavigator();
 
 const markerData = [
   { id: 1, title: 'Driveway', description: '2/3 spots available. Available 9am-5pm.', coordinates: { latitude: 40.24283, longitude: -111.65371 }, image: require('./assets/car.png') },
@@ -15,7 +22,7 @@ const markerData = [
   { id: 9, title: 'Business', description: '2/2 spots available. Available 9am-5pm.', coordinates: { latitude: 40.25006, longitude: -111.64279 }, image: require('./assets/business.png') },
 ];
 
-const App = () => {
+const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const handleCheckInPress = () => {
@@ -70,6 +77,38 @@ const App = () => {
         <CheckInForm onSubmit={handleCheckInSubmit} onCancel={() => setModalVisible(false)} />
       </Modal>
     </View>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === "LotStatus") {
+              iconName = focused ? "car" : "car-outline";
+            } else if (route.name === "Home") {
+              iconName = focused ? "home" : "home-outline";
+            } else if (route.name === "Account") {
+              iconName = focused ? "person" : "person-outline";
+            }
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: "tomato",
+          tabBarInactiveTintColor: "gray",
+        })}
+      >
+        <Tab.Screen
+          name="LotStatus"
+          component={LotStatus}
+          options={{ title: "Lot Status" }}
+        />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Account" component={AccountPage} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
