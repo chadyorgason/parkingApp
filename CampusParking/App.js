@@ -1,25 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
+import MapView, { Marker, Callout } from "react-native-maps";
 import AccountPage from "./AccountPage";
 import LotStatus from "./LotStatus";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import CheckInForm from './checkInForm';
+import CheckInForm from "./checkInForm";
 
 const Tab = createBottomTabNavigator();
 
 const markerData = [
-  { id: 1, title: 'Driveway', description: '2/3 spots available. Available 9am-5pm.', coordinates: { latitude: 40.24283, longitude: -111.65371 }, image: require('./assets/car.png') },
-  { id: 2, title: 'Driveway', description: '1/1 spots available. Available 10am-3pm.', coordinates: { latitude: 40.24458, longitude: -111.64837 }, image: require('./assets/car.png') },
-  { id: 3, title: 'Driveway', description: '1/2 spots available. Available 9am-1pm.', coordinates: { latitude: 40.25067, longitude: -111.64249 }, image: require('./assets/car.png') },
-  { id: 4, title: 'Driveway', description: '2/2 spots available. Available 9am-9pm.', coordinates: { latitude: 40.24346, longitude: -111.65304 }, image: require('./assets/car.png') },
-  { id: 5, title: 'Driveway', description: '3/3 spots available. Available 8am-12pm.', coordinates: { latitude: 40.25650, longitude: -111.64943 }, image: require('./assets/car.png') },
-  { id: 6, title: 'Driveway', description: '1/1 spots available. Available 9am-9pm.', coordinates: { latitude: 40.25617, longitude: -111.65007 }, image: require('./assets/car.png') },
-  { id: 7, title: 'Driveway', description: '1/1 spots available. Available 9am-9pm.', coordinates: { latitude: 40.24325, longitude: -111.64961 }, image: require('./assets/car.png') },
-  { id: 8, title: 'Business', description: '4/8 spots available. Available 7am-11pm.', coordinates: { latitude: 40.25127, longitude: -111.65921 }, image: require('./assets/business.png') },
-  { id: 9, title: 'Business', description: '2/2 spots available. Available 9am-5pm.', coordinates: { latitude: 40.25006, longitude: -111.64279 }, image: require('./assets/business.png') },
+  {
+    id: 1,
+    title: "Driveway",
+    description: "2/3 spots available. Available 9am-5pm.",
+    coordinates: { latitude: 40.24283, longitude: -111.65371 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 2,
+    title: "Driveway",
+    description: "1/1 spots available. Available 10am-3pm.",
+    coordinates: { latitude: 40.24458, longitude: -111.64837 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 3,
+    title: "Driveway",
+    description: "1/2 spots available. Available 9am-1pm.",
+    coordinates: { latitude: 40.25067, longitude: -111.64249 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 4,
+    title: "Driveway",
+    description: "2/2 spots available. Available 9am-9pm.",
+    coordinates: { latitude: 40.24346, longitude: -111.65304 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 5,
+    title: "Driveway",
+    description: "3/3 spots available. Available 8am-12pm.",
+    coordinates: { latitude: 40.2565, longitude: -111.64943 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 6,
+    title: "Driveway",
+    description: "1/1 spots available. Available 9am-9pm.",
+    coordinates: { latitude: 40.25617, longitude: -111.65007 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 7,
+    title: "Driveway",
+    description: "1/1 spots available. Available 9am-9pm.",
+    coordinates: { latitude: 40.24325, longitude: -111.64961 },
+    image: require("./assets/car.png"),
+  },
+  {
+    id: 8,
+    title: "Business",
+    description: "4/8 spots available. Available 7am-11pm.",
+    coordinates: { latitude: 40.25127, longitude: -111.65921 },
+    image: require("./assets/business.png"),
+  },
+  {
+    id: 9,
+    title: "Business",
+    description: "2/2 spots available. Available 9am-5pm.",
+    coordinates: { latitude: 40.25006, longitude: -111.64279 },
+    image: require("./assets/business.png"),
+  },
 ];
 
 const HomeScreen = () => {
@@ -31,7 +85,7 @@ const HomeScreen = () => {
 
   const handleCheckInSubmit = (formData) => {
     // Handle the form submission logic here
-    console.log('Form data submitted:', formData);
+    console.log("Form data submitted:", formData);
     setModalVisible(false); // Close the modal after submission
   };
 
@@ -41,12 +95,12 @@ const HomeScreen = () => {
         style={styles.map}
         initialRegion={{
           latitude: 40.2506,
-          longitude: -111.6490,
+          longitude: -111.649,
           latitudeDelta: 0.03,
           longitudeDelta: 0.03,
         }}
       >
-        {markerData.map(marker => (
+        {markerData.map((marker) => (
           <Marker
             key={marker.id}
             coordinate={marker.coordinates}
@@ -58,8 +112,13 @@ const HomeScreen = () => {
             <Callout>
               <View style={styles.calloutContainer}>
                 <Text style={styles.calloutTitle}>{marker.title}</Text>
-                <Text style={styles.calloutDescription}>{marker.description}</Text>
-                <TouchableOpacity style={styles.calloutButton} onPress={handleCheckInPress}>
+                <Text style={styles.calloutDescription}>
+                  {marker.description}
+                </Text>
+                <TouchableOpacity
+                  style={styles.calloutButton}
+                  onPress={handleCheckInPress}
+                >
                   <Text style={styles.calloutButtonText}>Check In Here</Text>
                 </TouchableOpacity>
               </View>
@@ -74,7 +133,10 @@ const HomeScreen = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <CheckInForm onSubmit={handleCheckInSubmit} onCancel={() => setModalVisible(false)} />
+        <CheckInForm
+          onSubmit={handleCheckInSubmit}
+          onCancel={() => setModalVisible(false)}
+        />
       </Modal>
     </View>
   );
@@ -122,12 +184,12 @@ const styles = StyleSheet.create({
   calloutContainer: {
     width: 200,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 8,
   },
   calloutTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   calloutDescription: {
@@ -135,13 +197,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   calloutButton: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     padding: 8,
     borderRadius: 6,
-    alignItems: 'center',
+    alignItems: "center",
   },
   calloutButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 14,
   },
 });
